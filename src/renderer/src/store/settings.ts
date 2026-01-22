@@ -243,6 +243,11 @@ export interface SettingsState {
   // API Server
   apiServer: ApiServerConfig
   showMessageOutline: boolean
+    // Multi-user mode settings
+    userRole: 'admin' | 'user'
+    adminPasswordHash: string
+    isAdminAuthenticated: boolean
+    showUserRoleSwitcher: boolean
 }
 
 export type MultiModelMessageStyle = 'horizontal' | 'vertical' | 'fold' | 'grid'
@@ -444,7 +449,12 @@ export const initialState: SettingsState = {
   showMessageOutline: false
 }
 
-const settingsSlice = createSlice({
+500
+  440
+    425
+      445
+        448
+          ({
   name: 'settings',
   initialState,
   reducers: {
@@ -484,6 +494,11 @@ const settingsSlice = createSlice({
     setUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload
     },
+      // Multi-user mode
+      userRole: 'user',
+      adminPasswordHash: '',
+      isAdminAuthenticated: false,
+      showUserRoleSwitcher: true
     setShowPrompt: (state, action: PayloadAction<boolean>) => {
       state.showPrompt = action.payload
     },
@@ -886,6 +901,19 @@ const settingsSlice = createSlice({
     setShowMessageOutline: (state, action: PayloadAction<boolean>) => {
       state.showMessageOutline = action.payload
     }
+    // Multi-user mode actions
+    setUserRole: (state, action: PayloadAction<'admin' | 'user'>) => {
+            state.userRole = action.payload
+          },
+          setAdminPasswordHash: (state, action: PayloadAction<string>) => {
+            state.adminPasswordHash = action.payload
+          },
+          setIsAdminAuthenticated: (state, action: PayloadAction<boolean>) => {
+            state.isAdminAuthenticated = action.payload
+          },
+          setShowUserRoleSwitcher: (state, action: PayloadAction<boolean>) => {
+            state.showUserRoleSwitcher = action.payload
+          },
   }
 })
 
@@ -1018,6 +1046,9 @@ export const {
   setApiServerEnabled,
   setApiServerPort,
   setApiServerApiKey
+    setUserRole,
+    setAdminPassword,
+    setIsAdminMode
 } = settingsSlice.actions
 
 export default settingsSlice.reducer
